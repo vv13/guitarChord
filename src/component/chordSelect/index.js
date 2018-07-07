@@ -2,11 +2,12 @@ import React, {
 	Component
 } from 'react';
 import './index.css';
+import Tone from '../../algorithm/Tone'
 import loading from './bars.svg';
+
 class ChordSelect extends Component {
 	constructor(props) {
 		super(props);
-		this.keyMap = ['1', '#1', 'b2', '2', '#2', 'b3', '3', '4', '#4', 'b5', '5', '#5', 'b6', '6', '#6', 'b7', '7'];
 		this.state = {
 			chordTone: ['1', '3', '5'],
 			type: 3,
@@ -30,24 +31,6 @@ class ChordSelect extends Component {
 	isMobile() {
 		return !!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i));
 	}
-	drawPianoMap() {
-		return (
-			<div className="key-map-box">
-				{this.keyMap2.map((key, i)=>{
-					if(!this.isArray(key)){
-						return (
-							<div className="white-key">
-								<span className={"key-tone"+(i > 11 ? " octave":"")}>{key}</span>
-								{this.isArray(this.keyMap2[i+1])?<div className="black-key"><span className="key-tone tone-add">{this.keyMap2[i+1][0]}</span><span className="key-tone tone-sub">{this.keyMap2[i+1][1]}</span></div>:null}
-							</div>
-						)
-					}else{
-						return null;
-					}
-				})}
-			</div>
-		)
-	}
 	touchMove(index, e) {
 		let keyBarName = "keyBar" + (index + 1);
 		let x = this.isNumber(e) ? e : e.touches[0].clientX;
@@ -56,7 +39,7 @@ class ChordSelect extends Component {
 		let resultX = (this.keyBarX + dx) * 0.8;
 		_state[keyBarName] = resultX < this.minLeft ? this.minLeft : (resultX > this.maxLeft ? this.maxLeft : resultX);
 		let percent = (_state[keyBarName] - this.minLeft) / (this.maxLeft - this.minLeft + 0.01);
-		let newKey = this.keyMap[Math.floor(percent * this.keyMap.length)];
+		let newKey = Tone.keyMap[Math.floor(percent * Tone.keyMap.length)];
 		_state.chordTone = this.state.chordTone.concat();
 		_state.chordTone[index] = newKey;
 		this.setState(_state);

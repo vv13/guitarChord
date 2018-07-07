@@ -2,11 +2,10 @@ import React, {
 	Component
 } from 'react';
 import './index.css';
-import {
-	GuitarChord,
-	ChordName,
-	ChordSvg
-} from '../../guitarChord.js';
+import GuitarChord from '../../algorithm/GuitarChord'
+import ChordName from '../../algorithm/ChordName'
+import ChordSvg from '../../algorithm/ChordSvg'
+
 class ChordDraw extends Component {
 	constructor(props) {
 		super(props);
